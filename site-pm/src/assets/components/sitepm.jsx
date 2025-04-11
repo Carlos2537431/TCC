@@ -7,6 +7,7 @@ const ReportForm = () => {
     cpf: "",
     carModel: "",
     licensePlate: "",
+    anoCarro: "",
     incidentType: "furto", // Valor padrão
     description: "",
   });
@@ -37,7 +38,12 @@ const ReportForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    // Atualiza o estado com o novo valor do campo
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
   const resetForm = () => {
@@ -46,6 +52,7 @@ const ReportForm = () => {
       cpf: "",
       carModel: "",
       licensePlate: "",
+      anoCarro: "",
       incidentType: "furto",
       description: "",
     });
@@ -53,15 +60,21 @@ const ReportForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    // Validação do formulário
+    if (!isFormValid()) {
+      setMessage({ type: "error", text: "Por favor, preencha todos os campos corretamente." });
+      return;
+    }
+  
     if (!isValidCPF(formData.cpf)) {
       setMessage({ type: "error", text: "Por favor, insira um CPF válido." });
       return;
     }
-
+  
     setIsSubmitting(true);
     setMessage({ type: "", text: "" });
-
+  
     try {
       // Simula envio de dados
       await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -75,11 +88,18 @@ const ReportForm = () => {
   };
 
   const isFormValid = () => {
+    const isLicensePlateValid = /^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/.test(formData.licensePlate);
+    const isCarYearValid =
+      /^\d{4}$/.test(formData.anoCarro) &&
+      formData.anoCarro >= 1886 &&
+      formData.anoCarro <= new Date().getFullYear();
+
     return (
       formData.name &&
       isValidCPF(formData.cpf) &&
       formData.carModel &&
-      formData.licensePlate &&
+      isCarYearValid &&
+      isLicensePlateValid &&
       formData.description
     );
   };
@@ -92,7 +112,7 @@ const ReportForm = () => {
           {message.text}
         </div>
       )}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} >
         <div>
           <label htmlFor="name">Nome Completo:</label>
           <input
@@ -127,6 +147,20 @@ const ReportForm = () => {
             value={formData.carModel}
             onChange={handleChange}
             placeholder="Digite o modelo do carro"
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="anoCarro">Ano do carro:</label>
+          <input
+            type="number"
+            id="anoCarro"
+            name="anoCarro"
+            value={formData.anoCarro}
+            onChange={handleChange}
+            placeholder="Digite o ano do carro"
+            min="1886"
+            max={new Date().getFullYear()}
             required
           />
         </div>

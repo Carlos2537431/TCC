@@ -1,3 +1,4 @@
+/* Estilo geral */
 body {
   font-family: 'Arial', sans-serif;
   background-color: #f0f2f5;
@@ -25,6 +26,7 @@ h1 {
   margin-bottom: 20px;
 }
 
+/* Estilo do formulário */
 form {
   display: flex;
   flex-direction: column;
@@ -34,23 +36,28 @@ form {
 form div {
   display: flex;
   flex-direction: column;
+  position: relative; /* Garante que os elementos internos sejam posicionados corretamente */
 }
 
 label {
   font-weight: bold;
   margin-bottom: 5px;
   color: #555555;
+  cursor: pointer; /* Garante que o rótulo seja clicável */
 }
 
 input,
 textarea,
 select {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #cccccc;
   border-radius: 5px;
-  font-size: 14px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  z-index: 1; /* Garante que os campos fiquem acima de outros elementos */
+  position: relative; /* Evita sobreposição de elementos */
 }
 
 input:focus,
@@ -61,75 +68,60 @@ select:focus {
   outline: none;
 }
 
-textarea {
-  resize: none;
-  height: 120px;
-}
-
-button {
+/* Botão de envio */
+button[type="submit"] {
+  padding: 10px 15px;
   background-color: #007bff;
   color: #ffffff;
-  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-button:hover {
+button[type="submit"]:hover {
   background-color: #0056b3;
   transform: scale(1.02);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-button:active {
-  transform: scale(0.98);
-}
-
-button:disabled {
+button[type="submit"]:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
-  transform: none;
 }
 
+/* Mensagens de feedback */
 .message {
-  margin-top: 10px;
   padding: 10px;
   border-radius: 5px;
   font-size: 0.9rem;
+  text-align: center;
 }
 
 .message.success {
   background-color: #d4edda;
   color: #155724;
+  border: 1px solid #c3e6cb;
 }
 
 .message.error {
   background-color: #f8d7da;
   color: #721c24;
+  border: 1px solid #f5c6cb;
 }
 
+/* Responsividade */
 @media (max-width: 768px) {
   .container {
     padding: 20px;
   }
 
   h1 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
 
-  button {
-    font-size: 14px;
-    padding: 10px;
+  button[type="submit"] {
+    font-size: 0.9rem;
   }
-}
-
-.invalid {
-  border-color: #ff4d4d;
-}
-
-::placeholder {
-  color: #aaaaaa;
-  font-style: italic;
 }
