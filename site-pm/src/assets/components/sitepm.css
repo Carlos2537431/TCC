@@ -63,7 +63,8 @@ select {
 input:focus,
 textarea:focus,
 select:focus {
-  border-color: #007bff;
+  border-color: #555555;
+  ;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   outline: none;
 }
@@ -71,7 +72,7 @@ select:focus {
 /* Botão de envio */
 button[type="submit"] {
   padding: 10px 15px;
-  background-color: #007bff;
+  background-color:  #555555;
   color: #ffffff;
   font-size: 1rem;
   font-weight: bold;
@@ -82,7 +83,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color:  #555555;
   transform: scale(1.02);
 }
 
