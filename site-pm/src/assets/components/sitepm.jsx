@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./sitepm.css";
+import { db } from "./firebase";
+import { ref, push } from "firebase/database";
 
 const ReportForm = () => {
   const [formData, setFormData] = useState({
@@ -7,8 +9,7 @@ const ReportForm = () => {
     cpf: "",
     carModel: "",
     licensePlate: "",
-    anoCarro: "",
-    incidentType: "furto", // Valor padrão
+    incidentType: "furto", 
     description: "",
   });
 
@@ -16,7 +17,7 @@ const ReportForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isValidCPF = (cpf) => {
-    cpf = cpf.replace(/[^\d]/g, ""); // Remove caracteres não numéricos
+    cpf = cpf.replace(/[^\d]/g, ""); 
     if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
 
     let sum = 0;
@@ -36,14 +37,16 @@ const ReportForm = () => {
     return secondCheck === parseInt(cpf.charAt(10));
   };
 
+  // Valida placa padrão antigo e Mercosul
+  const isValidLicensePlate = (plate) => {
+    const mercosul = /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/i;
+    const antigo = /^[A-Z]{3}[0-9]{4}$/i;
+    return mercosul.test(plate) || antigo.test(plate);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    // Atualiza o estado com o novo valor do campo
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    setFormData({ ...formData, [name]: value });
   };
 
   const resetForm = () => {
@@ -52,7 +55,6 @@ const ReportForm = () => {
       cpf: "",
       carModel: "",
       licensePlate: "",
-      anoCarro: "",
       incidentType: "furto",
       description: "",
     });
@@ -60,24 +62,22 @@ const ReportForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Validação do formulário
-    if (!isFormValid()) {
-      setMessage({ type: "error", text: "Por favor, preencha todos os campos corretamente." });
-      return;
-    }
-  
+
     if (!isValidCPF(formData.cpf)) {
       setMessage({ type: "error", text: "Por favor, insira um CPF válido." });
       return;
     }
-  
+
+    if (!isValidLicensePlate(formData.licensePlate)) {
+      setMessage({ type: "error", text: "Por favor, insira uma placa válida (ex: ABC1234 ou ABC1D23)." });
+      return;
+    }
+
     setIsSubmitting(true);
     setMessage({ type: "", text: "" });
-  
+
     try {
-      // Simula envio de dados
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await push(ref(db, "ocorrencias"), formData);
       setMessage({ type: "success", text: "Boletim de Ocorrência registrado com sucesso!" });
       resetForm();
     } catch (error) {
@@ -88,18 +88,11 @@ const ReportForm = () => {
   };
 
   const isFormValid = () => {
-    const isLicensePlateValid = /^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/.test(formData.licensePlate);
-    const isCarYearValid =
-      /^\d{4}$/.test(formData.anoCarro) &&
-      formData.anoCarro >= 1886 &&
-      formData.anoCarro <= new Date().getFullYear();
-
     return (
       formData.name &&
       isValidCPF(formData.cpf) &&
       formData.carModel &&
-      isCarYearValid &&
-      isLicensePlateValid &&
+      isValidLicensePlate(formData.licensePlate) &&
       formData.description
     );
   };
@@ -112,7 +105,7 @@ const ReportForm = () => {
           {message.text}
         </div>
       )}
-      <form onSubmit={handleSubmit} >
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Nome Completo:</label>
           <input
@@ -147,20 +140,6 @@ const ReportForm = () => {
             value={formData.carModel}
             onChange={handleChange}
             placeholder="Digite o modelo do carro"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="anoCarro">Ano do carro:</label>
-          <input
-            type="number"
-            id="anoCarro"
-            name="anoCarro"
-            value={formData.anoCarro}
-            onChange={handleChange}
-            placeholder="Digite o ano do carro"
-            min="1886"
-            max={new Date().getFullYear()}
             required
           />
         </div>
@@ -204,6 +183,13 @@ const ReportForm = () => {
           {isSubmitting ? "Enviando..." : "Registrar"}
         </button>
       </form>
+
+      <footer className="footer">
+        <p>© 2025 Site PM. Todos os direitos reservados.</p>
+        <p>
+          Entre em contato: <a href="mailto:contato@sitepm.com">contato@sitepm.com</a>
+        </p>
+      </footer>
     </div>
   );
 };

@@ -1,9 +1,6 @@
-/* Estilo geral */
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f0f2f5;
-  margin: 0;
-  padding: 0;
+  background-color:#333333;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,11 +9,11 @@ body {
 
 .container {
   background-color: #ffffff;
-  padding: 30px;
+  padding: 35px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
 }
 
 h1 {
@@ -26,7 +23,6 @@ h1 {
   margin-bottom: 20px;
 }
 
-/* Estilo do formulário */
 form {
   display: flex;
   flex-direction: column;
@@ -36,93 +32,73 @@ form {
 form div {
   display: flex;
   flex-direction: column;
-  position: relative; /* Garante que os elementos internos sejam posicionados corretamente */
 }
 
 label {
   font-weight: bold;
   margin-bottom: 5px;
   color: #555555;
-  cursor: pointer; /* Garante que o rótulo seja clicável */
 }
 
 input,
 textarea,
 select {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #cccccc;
   border-radius: 5px;
-  font-size: 1rem;
-  background-color: #f9f9f9;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  z-index: 1; /* Garante que os campos fiquem acima de outros elementos */
-  position: relative; /* Evita sobreposição de elementos */
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: #555555;
-  ;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  outline: none;
-}
 
-/* Botão de envio */
-button[type="submit"] {
-  padding: 10px 15px;
-  background-color:  #555555;
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-}
 
-button[type="submit"]:hover {
-  background-color:  #555555;
-  transform: scale(1.02);
-}
-
-button[type="submit"]:disabled {
+button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+  transform: none;
 }
 
-/* Mensagens de feedback */
 .message {
+  margin-top: 10px;
   padding: 10px;
   border-radius: 5px;
   font-size: 0.9rem;
-  text-align: center;
 }
 
 .message.success {
   background-color: #d4edda;
   color: #155724;
-  border: 1px solid #c3e6cb;
 }
 
 .message.error {
   background-color: #f8d7da;
   color: #721c24;
-  border: 1px solid #f5c6cb;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .container {
-    padding: 20px;
-  }
+.container {
+  position: relative;
+  z-index: 1;
+}
 
-  h1 {
-    font-size: 1.5rem;
-  }
+.footer {
+  position: static;
+  z-index: 0;}
 
-  button[type="submit"] {
-    font-size: 0.9rem;
-  }
+.invalid {
+  border-color: #ff4d4d;
+}
+.footer {
+  margin-top: 20px;
+  background-color: #bd2020;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  font-size: 0.9rem;
+  border-radius: 5px;
+}
+::placeholder {
+  color: #aaaaaa;
+  font-style: italic;
 }
