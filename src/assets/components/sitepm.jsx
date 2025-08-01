@@ -11,6 +11,7 @@ const ReportForm = () => {
     licensePlate: "",
     incidentType: "furto", 
     description: "",
+    phone: "", // campo telefone
   });
 
   const [message, setMessage] = useState({ type: "", text: "" });
@@ -44,6 +45,12 @@ const ReportForm = () => {
     return mercosul.test(plate) || antigo.test(plate);
   };
 
+  // Validação de telefone: 10 ou 11 dígitos
+  const isValidPhone = (phone) => {
+    const cleaned = phone.replace(/[^\d]/g, "");
+    return cleaned.length === 10 || cleaned.length === 11;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -57,6 +64,7 @@ const ReportForm = () => {
       licensePlate: "",
       incidentType: "furto",
       description: "",
+      phone: "",
     });
   };
 
@@ -70,6 +78,11 @@ const ReportForm = () => {
 
     if (!isValidLicensePlate(formData.licensePlate)) {
       setMessage({ type: "error", text: "Por favor, insira uma placa válida (ex: ABC1234 ou ABC1D23)." });
+      return;
+    }
+
+    if (!isValidPhone(formData.phone)) {
+      setMessage({ type: "error", text: "Por favor, insira um telefone válido (apenas números, com DDD)." });
       return;
     }
 
@@ -93,6 +106,7 @@ const ReportForm = () => {
       isValidCPF(formData.cpf) &&
       formData.carModel &&
       isValidLicensePlate(formData.licensePlate) &&
+      isValidPhone(formData.phone) &&
       formData.description
     );
   };
@@ -117,6 +131,18 @@ const ReportForm = () => {
             placeholder="Digite seu nome completo"
             required
             autoFocus
+          />
+        </div>
+        <div>
+          <label htmlFor="phone">Telefone Para Contato:</label>
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="Digite seu telefone com DDD"
+            required
           />
         </div>
         <div>
@@ -179,6 +205,7 @@ const ReportForm = () => {
             required
           ></textarea>
         </div>
+        
         <button type="submit" disabled={isSubmitting || !isFormValid()}>
           {isSubmitting ? "Enviando..." : "Registrar"}
         </button>
