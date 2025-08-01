@@ -12,6 +12,15 @@ body {
   background-blend-mode: fixed;
 }
 
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 160px;
+  margin-left: 105px;
+}
+
+
 .container {
   background-color: #ffffff;
   padding: 35px;

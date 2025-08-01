@@ -113,6 +113,9 @@ const ReportForm = () => {
 
   return (
     <div className="container">
+      <div className="logo">
+        <img src="/public/pm.png" alt="PM Logo" className="logo" />
+        </div>
       <h1>Registrar Boletim de Ocorrência</h1>
       {message.text && (
         <div className={`message ${message.type}`}>
