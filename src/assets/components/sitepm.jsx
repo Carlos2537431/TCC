@@ -215,9 +215,9 @@ const ReportForm = () => {
       </form>
 
       <footer className="footer">
-        <p>© 2025 Site PM. Todos os direitos reservados.</p>
+        <p>© 2025. Todos os direitos reservados.</p>
         <p>
-          Entre em contato: <a href="mailto:contato@sitepm.com">contato@sitepm.com</a>
+          Acesse o Site Da Policia Militar aqui: <a href="https://www.policiamilitar.sp.gov.br/"> Clique Aqui</a>
         </p>
       </footer>
     </div>

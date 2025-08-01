@@ -57,9 +57,8 @@ label {
 }
 
 input,
-textarea,
-select {
-  width: 100%;
+textarea {
+  width: 470px;
   padding: 12px;
   border: 1px solid #cccccc;
   border-radius: 5px;
@@ -67,14 +66,24 @@ select {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-
+.input,
+select {
+  width: 495px;
+  padding: 12px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
 
 button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
   transform: none;
 }
-
+button {
+  width: 495px;
+}
 .message {
   margin-top: 10px;
   padding: 10px;
@@ -92,29 +101,15 @@ button:disabled {
   color: #721c24;
 }
 
-.container {
-  position: relative;
-  z-index: 1;
-}
-
-.footer {
-  position: static;
-  z-index: 0;}
-
-.invalid {
-  border-color: #ff4d4d;
-}
 .footer {
   margin-top: 20px;
-  background-color: #bd2020;
+  background-color: #353131;
   color: #ffffff;
   text-align: center;
   padding: 10px 0;
-  width: 100%;
+  width: 495px;
   font-size: 0.9rem;
   border-radius: 5px;
-}
-::placeholder {
-  color: #aaaaaa;
-  font-style: italic;
+  position: static;
+  z-index: 0;
 }
